@@ -26,7 +26,17 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
   </div>
 </div>
 
-<div class="row">Xuất dữ liệu từ Google Sheets: <pre>{{myData | json}}</pre></div>
+<div class="row">Xuất dữ liệu từ Google Sheets: 
+<ul>
+<li>{{evID | json}}</li>
+<li>{{evTitle | json}}</li>
+<li>{{evDescription | json}}</li>
+<li>{{evContent}}</li>
+<li>{{evDateCreate | json}}</li>
+<li>{{evStatus | json}}</li>
+</ul>
+</div>
+<div ng-bind-html="evHTML"></div>
 </div></section>
   <section class="section-space-default bg-light">
      <div class="container zoom-gallery menu-list-wrapper">
@@ -531,7 +541,12 @@ export class AppComponent {
   apiRoot: string = "https://script.google.com/macros/s/AKfycbzp1brXop99zVGaqSehBVQlO0c5s8b-0fKj4UzPUxx01DkoJWuF/exec?request";
 
   constructor(private http: HttpClient) {}
-  myData : any;
+  evID : any;
+  evTitle:any;
+  evDescription:any;
+  evContent:any;
+  evDateCreate:any;
+  evStatus :any;
 
   doGET() {
     console.log("GET");
@@ -541,10 +556,12 @@ export class AppComponent {
     };
     this.http.get(url, httpOptions).subscribe(
       (res: any) => {console.log(res)
-        alert("News Success");
-        this.myData = res.evID; 
-        // Where you find the array res.data or res.data.data
-        console.log('res is ', res.evID);
+        this.evID = res.evID; 
+        this.evTitle = res.evTitle; 
+        this.evDescription = res.evDescription; 
+        this.evContent = res.evContent; 
+        this.evDateCreate = res.evDateCreate; 
+        this.evStatus = res.evStatus; 
       });
   }
 
